@@ -2,7 +2,7 @@ version: "3"
 
 services:
   rostest:
-    image: rosdisplaytest
+    image: yanjundream/rosdisplaytest
     privileged: true
     deploy:
       replicas: 2
