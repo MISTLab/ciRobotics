@@ -1,0 +1,99 @@
+version: "2"
+
+services:
+  gitlab:
+    image: 'gitlab/gitlab-ce:latest'
+    restart: always
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://localhost:5001'
+        gitlab_rails['gitlab_shell_ssh_port'] = 10022
+        registry_external_url 'http://localhost:4567'
+
+    ports:
+      - '5001:5001'
+      - '10022:22'
+      - '4567:4567'
+    volumes:
+      - '/srv/gitlab/config:/etc/gitlab'
+      - '/srv/gitlab/logs:/var/log/gitlab'
+      - '/srv/gitlab/data:/var/opt/gitlab'
+      # - '/home/jun/projects/ciRobotPP/gitlab:/home/git/data'
+      # - '/home/jun/projects/ciRobotPP/certs:/certs'
+
+
+  gitlab-runner:
+    image: 'gitlab/gitlab-runner:latest'
+    restart: always
+    volumes:
+      - '/srv/gitlab-runner/config:/etc/gitlab-runner'
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - '/usr/bin/docker:/usr/bin/docker'
+
+  dockerswarm:
+    image: docker:dind
+    container_name: manager
+    #hostname: manager
+    #restart: always
+    #network_mode: cirobotpp_default
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    command: ifconfig
+    command: docker swarm init
+    command: tail -f /dev/null
+
+
+  # registry:
+  #   image: registry:2
+  #   restart: always
+  #   ports:
+  #     - 5000:5000
+  #   environment:
+  #     REGISTRY_HTTP_ADDR: '0.0.0.0:5000'
+  #     REGISTRY_AUTH: htpasswd
+  #     REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+  #     REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+  #     REGISTRY_HTTP_TLS_CERTIFICATE: /certs/domain.crt
+  #     REGISTRY_HTTP_TLS_KEY: /certs/domain.key
+  #   volumes:
+  #     #- /home/jun/projects/ciRobotPP/registry:/var/lib/registry
+  #     - /home/jun/projects/ciRobotPP/certs:/certs 
+  #     - /home/jun/projects/ciRobotPP/auth:/auth
+  #     #- /home/jun/projects/ciRobotPP/registry/config.yml:/etc/docker/registry/config.yml
+
+
+# working docker case
+# docker run -d \
+#   -p 5000:5000 \
+#   --restart=always \
+#   --name registryx \
+#   --network cirobotpp_default\
+#   -v /home/jun/projects/ciRobotPP/auth:/auth \
+#   -e "REGISTRY_AUTH=htpasswd" \
+#   -e "REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm" \
+#   -e REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd \
+#   -v /home/jun/projects/ciRobotPP/certs:/certs \
+#   -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt \
+#   -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key \
+#   registry:2
+
+
+
+
+ 
+  # rostest:
+  #   image: rosme
+  #   privileged: true
+  #   environment:
+  #     DISPLAY: 'true'
+  #     QT_X11_NO_MITSHM: 1
+  #   volumes:
+  #     - /tmp/.X11-unix:/tmp/.X11-unix:rw
+
+  # dockertest:
+  #   image: docker
+  #   volumes:
+  #     - '/var/run/docker.sock:/var/run/docker.sock'
+  #     - '/home/jun/projects/ciRobotPP/certs/:/usr/local/share/ca-certificates'
+
+
