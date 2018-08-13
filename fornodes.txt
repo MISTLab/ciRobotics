@@ -1,3 +1,3 @@
 u16-vbw2
 192.168.0.99
-docker swarm join --token SWMTKN-1-2ce1a8e0mphusto1mvh8a29rfts0mi91p9qsnkcrxvl3e4n4cq-26ubr6i53wgja405cdoia5gu1 192.168.0.99:2377
+docker swarm join --token SWMTKN-1-5r82y5id52q4qebyk17yss1d0212b32dhkzb7ybl94djysydzx-bi3zg93hiahkrrppb60dxv08h 192.168.0.99:2377
