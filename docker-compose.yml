@@ -30,17 +30,17 @@ services:
       - '/var/run/docker.sock:/var/run/docker.sock'
       - '/usr/bin/docker:/usr/bin/docker'
 
-  dockerswarm:
-    image: docker:dind
-    container_name: manager
+#  dockerswarm:
+#    image: docker:dind
+#    container_name: manager
     #hostname: manager
     #restart: always
     #network_mode: cirobotpp_default
-    volumes:
-      - '/var/run/docker.sock:/var/run/docker.sock'
-    command: ifconfig
-    command: docker swarm init
-    command: tail -f /dev/null
+#    volumes:
+#      - '/var/run/docker.sock:/var/run/docker.sock'
+#    command: ifconfig
+#    command: docker swarm init
+#    command: tail -f /dev/null
 
 
   # registry:
