@@ -5,9 +5,8 @@
 image: busybox:latest
 
 before_script:
-  - echo "Before script section"
-  - echo "For example you might run an update here or install a build dependency"
-  - echo "Or perhaps you might print out some debugging details"
+  - echo "to login"
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN
    
 after_script:
   - echo "After script section"
@@ -17,6 +16,8 @@ build1:
   stage: build
   script:
     - echo "Do your build here"
+    - docker build -t u16-vbw2:4567/root/citest .
+    - docker push u16-vbw2:4567/root/citest
    
 test1:
   stage: test
