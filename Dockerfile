@@ -7,5 +7,5 @@ FROM buildpack-deps:jessie
 WORKDIR /usr/local/bin
 
 # Change `app` to whatever your binary is called
-Add app .
-CMD ["./app"]
+Add . .
+CMD ["echo helloworld"]
