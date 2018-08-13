@@ -3,7 +3,10 @@
 echo $(hostname)
 mkdir  services
 cp ./docker-compose.yml ./services/docker-compose.yml
-cp ./runservice.sh ./services/runservice.sh
+#cp ./runservice.sh ./services/runservice.sh
 
 sed -n "s/localhost/$(hostname)/p" ./services/docker-compose.yml
-bash ./services/runservice.sh
+cd services
+docker-compose up -d 
+cd ..
+
