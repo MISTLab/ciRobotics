@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 
 services:
   gitlab:
@@ -8,18 +8,22 @@ services:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'http://localhost:7001'
         gitlab_rails['gitlab_shell_ssh_port'] = 7002
-        registry_external_url 'http://localhost:7567'
-
+        registry_external_url 'http://localhost:4567'
+#        registry_nginx['ssl_certificate'] = "/certs/gitlabswarm:4567.crt"
+#        registry_nginx['ssl_certificate_key'] = "/certs/gitlabswarm:4567.key"
     ports:
       - '7001:7001'
       - '7002:22'
-      - '7567:4567'
+      - '4567:4567'
     volumes:
       - '/srv/gitlab/config:/etc/gitlab'
       - '/srv/gitlab/logs:/var/log/gitlab'
       - '/srv/gitlab/data:/var/opt/gitlab'
-      # - '/home/jun/projects/ciRobotPP/gitlab:/home/git/data'
-      # - '/home/jun/projects/ciRobotPP/certs:/certs'
+      - '/etc/hosts:/etc/hosts'
+      #- '/home/jun/projects/ciRobotPP/gitlab:/home/git/data'
+      #- '/home/u16/projects/ciRobotics/certs:/certs'
+    networks:
+      - gitlab
 
 
   gitlab-runner:
@@ -29,71 +33,36 @@ services:
       - '/srv/gitlab-runner/config:/etc/gitlab-runner'
       - '/var/run/docker.sock:/var/run/docker.sock'
       - '/usr/bin/docker:/usr/bin/docker'
-
-#  dockerswarm:
-#    image: docker:dind
-#    container_name: manager
-    #hostname: manager
-    #restart: always
-    #network_mode: cirobotpp_default
-#    volumes:
-#      - '/var/run/docker.sock:/var/run/docker.sock'
-#    command: ifconfig
-#    command: docker swarm init
-#    command: tail -f /dev/null
+      - '/etc/hosts:/etc/hosts'
+    networks:
+      - gitlab
 
 
-  # registry:
-  #   image: registry:2
-  #   restart: always
-  #   ports:
-  #     - 5000:5000
-  #   environment:
-  #     REGISTRY_HTTP_ADDR: '0.0.0.0:5000'
-  #     REGISTRY_AUTH: htpasswd
-  #     REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
-  #     REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
-  #     REGISTRY_HTTP_TLS_CERTIFICATE: /certs/domain.crt
-  #     REGISTRY_HTTP_TLS_KEY: /certs/domain.key
-  #   volumes:
-  #     #- /home/jun/projects/ciRobotPP/registry:/var/lib/registry
-  #     - /home/jun/projects/ciRobotPP/certs:/certs 
-  #     - /home/jun/projects/ciRobotPP/auth:/auth
-  #     #- /home/jun/projects/ciRobotPP/registry/config.yml:/etc/docker/registry/config.yml
+  gitlab-runner-register:
+    image: 'gitlab/gitlab-runner:latest'
+    restart: 'no'
+    volumes:
+      - '/srv/gitlab-runner/config:/etc/gitlab-runner'
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - '/usr/bin/docker:/usr/bin/docker'
+      - '/etc/hosts:/etc/hosts'
+    command:
+    - register
+    - --non-interactive
+    - --locked=false
+    - --name=Docker Runner
+    - --executor=docker
+    - --docker-image=docker:17.09.0-ce-dind
+    - --docker-volumes=/var/run/docker.sock:/var/run/docker.sock
+    - --docker-network-mode=services_gitlab
+    environment:
+    - CI_SERVER_URL=http://gitlab:7001
+    - REGISTRATION_TOKEN=pf91N9aRFyrTZhjRdyEB
+    - CLONE_URL=http://gitlab:7001
+#    - docker-network-mode=services_gitlab
+    networks:
+      - gitlab
 
-
-# working docker case
-# docker run -d \
-#   -p 5000:5000 \
-#   --restart=always \
-#   --name registryx \
-#   --network cirobotpp_default\
-#   -v /home/jun/projects/ciRobotPP/auth:/auth \
-#   -e "REGISTRY_AUTH=htpasswd" \
-#   -e "REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm" \
-#   -e REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd \
-#   -v /home/jun/projects/ciRobotPP/certs:/certs \
-#   -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt \
-#   -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key \
-#   registry:2
-
-
-
-
- 
-  # rostest:
-  #   image: rosme
-  #   privileged: true
-  #   environment:
-  #     DISPLAY: 'true'
-  #     QT_X11_NO_MITSHM: 1
-  #   volumes:
-  #     - /tmp/.X11-unix:/tmp/.X11-unix:rw
-
-  # dockertest:
-  #   image: docker
-  #   volumes:
-  #     - '/var/run/docker.sock:/var/run/docker.sock'
-  #     - '/home/jun/projects/ciRobotPP/certs/:/usr/local/share/ca-certificates'
-
+networks:
+  gitlab:
 
