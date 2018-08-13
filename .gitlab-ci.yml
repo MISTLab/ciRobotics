@@ -6,7 +6,7 @@ image: docker:dind
 
 before_script:
   - echo "to login"
-  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN  u16-vbw2:4567
    
 after_script:
   - echo "After script section"
