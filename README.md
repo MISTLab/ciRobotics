@@ -1,10 +1,10 @@
 CI-ROBOTICS
 ============================
 
-#Guide
+# Guide
 
 ## Master computer
-The following is only need to run **once** in your master comuter.
+The following is only run **once** in your master comuter.
 
 1. Fork this repo to your github account and then git clone to local.
 1. Run `cd ciRobotics`
