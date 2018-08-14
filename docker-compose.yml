@@ -58,7 +58,7 @@ services:
     - --docker-pull-policy=if-not-present
     environment:
     - CI_SERVER_URL=http://gitlab:7001
-    - REGISTRATION_TOKEN=pf91N9aRFyrTZhjRdyEB
+    - REGISTRATION_TOKEN=aaaaaaaaaa
     - CLONE_URL=http://gitlab:7001
 #    - docker-network-mode=services_gitlab
     networks:

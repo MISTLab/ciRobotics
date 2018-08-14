@@ -18,7 +18,7 @@ service docker restart
 cat $DAEMONDIR
 
 JOINSWARM=$(cat fornodes.txt|awk 'NR==3{print}')
-sudo docker swarm leave -f
+sudo docker swarm leave
 echo $JOINSWARM
 $JOINSWARM
 
