@@ -9,5 +9,6 @@ hostsfile=/etc/hosts
 echo $HOSTADD>>$hostsfile
 echo $HOSTADD
 JOINSWARM=$(cat fornodes.txt|awk 'NR==3{print}')
+sudo docker swarm leave -f
 echo $JOINSWARM
 $JOINSWARM
