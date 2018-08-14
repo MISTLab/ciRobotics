@@ -31,4 +31,4 @@ deploy1:
   stage: deploy
   script:
     - echo "Do your deploy here"
-    - docker service update --image $(docker inspect --type image --format '{{index .RepoDigests 0}}' u16-vbw2:4567/root/citest:latest) rosdisplay 
+    - docker service update --image $(docker inspect --type image --format '{{index .RepoDigests 0}}' u16-vbw2:4567/root/citest:latest) citest 
