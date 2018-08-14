@@ -21,7 +21,3 @@ cd services
 docker-compose up -d 
 cd ..
 
-
-git add "$destdir"
-git commit -a -m "Add fornodes for other nodes to use"
-git push
