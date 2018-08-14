@@ -29,3 +29,6 @@ After setup the *Master computer* and *Worker computers* successfully, then it w
 1. Run `git remote set-url --add --push origin *your_local_gitlab_project_address*`
 1. Run `git remote show origin` to check whether you have both push address.
 1. Add `.gitlab-ci.yml` and `Dockerfile` and enjoy the continuous intergration of robotics software.
+
+
+https://docs.google.com/presentation/d/1Rdn18mKDv5ac5F4cvWZN0im4FyhTu4LoJfjDOTt_Llo/edit?usp=sharing
