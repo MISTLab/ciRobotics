@@ -1,3 +1,6 @@
-u16-vbw2
-192.168.1.99
-docker swarm join --token SWMTKN-1-2cbf3wxuufei70ptzbnwxgppctp1jv6evducz0bkexiv6fmilf-4zilzk5dsea87q5slc2hppn69 192.168.1.99:2377
+u16-vb
+192.168.1.118
+docker swarm join --token SWMTKN-1-66lt2q9wyg7gwjlydsydgidjs03fwo2gw61kdn1jbb8scm4ij5-5puq3mjpzzbsfuyo0wz6zzyyr 192.168.1.118:2377
+pozyxdeploy
+pozyxdeploy
+pozyxdeploy

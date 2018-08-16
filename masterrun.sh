@@ -8,7 +8,7 @@ cp ./docker-compose.yml ./services/docker-compose.yml
 
 destdir=./fornodes.txt
 echo $(hostname)>"$destdir"
-IPADDR="$(ip route get 1 | awk '{print $NF;exit}')"
+IPADDR="$(ip route get 2 | awk '{print $NF;exit}')"
 echo $IPADDR>>"$destdir"
 docker swarm leave -f
 SWARMJOIN="$(docker swarm init --advertise-addr $IPADDR |awk '/SWMTKN/{print}')"
