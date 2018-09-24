@@ -18,7 +18,7 @@ The following is only run **once** in your master comuter.
 1. RUN `sudo ./enjoy.sh`. This step need a sudo privilege becasue it will add a domain name in your `/etc/hosts` and modify `/etc/docker/daemon.json` to use registry in an easy way(insecure).
 
 ## Worker computers
-1. git clone **your repo** in local. Careful, not `yanjundream/ciRobotics`
+1. git clone **your repo** in local. Careful, not `MISTLab/ciRobotics`
 2. Run `cd ciRobotics`
 3. RUN `sudo ./enjoy.sh`. This step need a sudo privilege becasue it will add a domain name in your `/etc/hosts` and modify `/etc/docker/daemon.json` to use registry in an easy way(insecure).
 
