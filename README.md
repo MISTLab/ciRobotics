@@ -8,7 +8,7 @@ The following is only run **once** in your master comuter.
 
 1. Fork this repo to your github account and then git clone to local.
 1. Run `cd ciRobotics`
-1. Run `. masterRun.sh` to init a swarm andd creat a gitlab servo.
+1. Run `. masterStart.sh` to init a swarm andd creat a gitlab servo.
 1. Wait two minutes to start a gitlab server. Go to `localhost:7001` to check whether the gitlab is ready.
 1. If it is ready, the page will ask you to set a password. Set any password you want. Then you will have a root accout with username `root` and password you have used.
 1. Go to `Admin/runner/shared runner` to copy the shared runner token.
